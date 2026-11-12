@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trende ne okusam? Ankara YHT Gar Kütüphanesi kitap önerici</title>
+<meta name="description" content="Ankara’dan gideceğiniz şehri seçin, yolculuk süresine sığan kitapları Ankara YHT Gar Kütüphanesi kataloğundan görün.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --zemin:#eef1f4; --kart:#ffffff; --murekkep:#1b2430; --soluk:#5b6675;
+  --cizgi:#cfd6df; --sinyal:#c8372d; --peron:#f2b705; --dolgu:#1f5f4a;
+}
+@media (prefers-color-scheme:dark){
+  :root{--zemin:#12171d; --kart:#1b222b; --murekkep:#e8edf3; --soluk:#9aa6b4; --cizgi:#334050; --sinyal:#ef6a5f; --peron:#f2b705; --dolgu:#4fb58f;}
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:1rem}
+body{margin:0;background:var(--zemin);color:var(--murekkep);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
+main{max-width:860px;margin:0 auto;padding:clamp(1.5rem,5vw,3.5rem) 1.25rem 3rem}
+h1{font-family:"Newsreader",Georgia,"Times New Roman",serif;font-weight:700;font-size:clamp(2.2rem,7vw,3.6rem);line-height:1.05;margin:0 0 .75rem;letter-spacing:-.01em}
+.giris{max-width:56ch;color:var(--soluk);margin:0 0 2.5rem;font-size:1.05rem}
+h2{font-family:"Newsreader",Georgia,serif;font-size:1.35rem;margin:0 0 1rem}
+
+/* Hat: duraklar yolculuk süresine göre sıralı */
+.hat{position:relative;list-style:none;margin:0 0 2.5rem;padding:0;display:flex;flex-wrap:wrap;gap:.6rem}
+.durak{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:.1rem;padding:.55rem .9rem .6rem;background:var(--kart);border:1.5px solid var(--cizgi);border-left:6px solid var(--cizgi);border-radius:4px;min-width:104px}
+.durak b{font-weight:600}
+.durak span{font-size:.82rem;color:var(--soluk)}
+.durak:hover{border-color:var(--murekkep)}
+.durak:focus-visible{outline:3px solid var(--sinyal);outline-offset:2px}
+.durak[aria-pressed="true"]{border-color:var(--murekkep);border-left-color:var(--sinyal);background:var(--murekkep);color:var(--zemin)}
+.durak[aria-pressed="true"] span{color:var(--zemin);opacity:.8}
+
+.ozet{display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem 1rem;margin:0 0 .5rem}
+.ozet strong{font-family:"Newsreader",Georgia,serif;font-size:1.6rem}
+.not{color:var(--soluk);margin:0 0 1.25rem;font-size:.95rem}
+.bos{padding:1.25rem;border:1.5px dashed var(--cizgi);border-radius:4px;color:var(--soluk)}
+
+/* Bilet kartı */
+.bilet{display:grid;grid-template-columns:1fr auto;background:var(--kart);border:1.5px solid var(--cizgi);border-radius:4px;margin:0 0 .9rem;position:relative}
+.bilet-ana{padding:1rem 1.1rem}
+.bilet-ana h3{font-family:"Newsreader",Georgia,serif;font-size:1.25rem;line-height:1.2;margin:0}
+.yazar{margin:.15rem 0 .8rem;color:var(--soluk)}
+.bilet-yan{border-left:2px dashed var(--cizgi);padding:1rem 1.1rem;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:.2rem;min-width:150px}
+.bilet-yan .sure{font-family:"Newsreader",Georgia,serif;font-weight:700;font-size:1.7rem;line-height:1}
+.bilet-yan small{color:var(--soluk)}
+.bilet-yan a{color:var(--sinyal);font-weight:500;margin-top:.5rem;font-size:.92rem}
+.cubuk{height:10px;background:var(--cizgi);border-radius:2px;overflow:hidden}
+.cubuk i{display:block;height:100%;background:var(--dolgu);width:0;transition:width .5s ease}
+.cubuk-yazi{font-size:.88rem;margin-top:.35rem}
+.cubuk-yazi.tam{color:var(--dolgu);font-weight:500}
+.daha{margin-top:.5rem;font:inherit;font-weight:500;padding:.6rem 1.1rem;background:transparent;color:var(--murekkep);border:1.5px solid var(--murekkep);border-radius:4px;cursor:pointer}
+.daha:hover{background:var(--murekkep);color:var(--zemin)}
+.daha:focus-visible{outline:3px solid var(--sinyal);outline-offset:2px}
+
+footer{margin-top:3rem;padding-top:1.25rem;border-top:1.5px solid var(--cizgi);color:var(--soluk);font-size:.88rem}
+footer p{margin:.3rem 0;max-width:68ch}
+footer a{color:inherit}
+
+@media (max-width:560px){
+  .bilet{grid-template-columns:1fr}
+  .bilet-yan{border-left:0;border-top:2px dashed var(--cizgi);flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:.2rem .9rem}
+  .bilet-yan a{margin-top:0}
+}
+@media (prefers-reduced-motion:reduce){.cubuk i{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Trende ne okusam?</h1>
+  <p class="giris">Ankara’dan gideceğiniz şehri seçin. Yolculuk süresine sığan kitapları Ankara YHT Gar Kütüphanesi kataloğundan önerelim.</p>
+
+  <h2 id="sehir-baslik">Nereye gidiyorsunuz?</h2>
+  <div class="hat" id="hat" role="group" aria-labelledby="sehir-baslik"></div>
+
+  <section id="sonuc" aria-live="polite">
+    <div class="bos">Önerileri görmek için yukarıdan bir şehir seçin.</div>
+  </section>
+
+  <footer>
+    <p>Okunma süresi, sayfa sayısının saatte 40 sayfa okuma hızına bölünmesiyle tahmin edilir. Herkesin hızı farklıdır.</p>
+    <p>Yolculuk süreleri yaklaşık değerdir; biletinizi almadan önce resmi tarifeyi kontrol edin. Kayseri ve sonrasındaki hatlar hızlı tren değil, konvansiyonel trenlerdir.</p>
+    <p>Veri, Ankara Büyükşehir Belediyesi kütüphane kataloğundan alınan 50 kitaplık bir örnektir; kütüphanenin tamamını kapsamaz.</p>
+  </footer>
+</main>
+
+<script>
+// Ankara’dan yaklaşık tren yolculuğu süreleri (saat) — recommender.py ile aynı.
+const SEHIRLER = [
+  ["Eskişehir",1.5],["Konya",1.8],["Sivas",2.0],["Karaman",2.7],["İstanbul",5.0],
+  ["Kayseri",7.0],["Adana",11.0],["İzmir",14.0],["Erzurum",22.0],["Diyarbakır",23.0],["Kars",26.0]
+];
+const ADIM = 5;
+const hat = document.getElementById("hat");
+const sonuc = document.getElementById("sonuc");
+let kitaplar = [];
+let secili = null;
+let gosterilen = ADIM;
+
+const sayi = n => n.toLocaleString("tr-TR", {maximumFractionDigits:1});
+const saat = n => sayi(n) + " saat";
+
+function yazarDuzelt(y){            // "Diker, Seda" -> "Seda Diker"
+  const p = y.split(", ");
+  return p.length === 2 ? p[1] + " " + p[0] : y;
+}
+function yuzde(toplam, yolculuk){ return Math.min(100, Math.floor(yolculuk / toplam * 100)); }
+
+function oner(yolculuk){
+  const sigan = kitaplar.filter(k => k.sure <= yolculuk);
+  if (sigan.length) return {liste: sigan.sort((a,b) => b.sure - a.sure), hepsi: true};
+  return {liste: [...kitaplar].sort((a,b) => a.sure - b.sure), hepsi: false};
+}
+
+function el(tag, attrs = {}, ...cocuklar){
+  const e = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs)) {
+    if (k === "text") e.textContent = v; else e.setAttribute(k, v);
+  }
+  cocuklar.forEach(c => e.append(c));
+  return e;
+}
+
+function bilet(k, yolculuk){
+  const y = yuzde(k.sure, yolculuk);
+  const tam = y === 100;
+  const cubuk = el("div", {class:"cubuk", role:"img", "aria-label": tam ? "Tamamı okunabilir" : "Yaklaşık %" + y + " okunabilir"}, el("i", {style:"width:" + y + "%"}));
+  const ana = el("div", {class:"bilet-ana"},
+    el("h3", {text:k.ad}),
+    el("p", {class:"yazar", text:yazarDuzelt(k.yazar)}),
+    cubuk,
+    el("div", {class:"cubuk-yazi" + (tam ? " tam" : ""), text: tam ? "Yolculukta rahatlıkla bitirirsiniz." : "Yolculukta yaklaşık %" + y + " kadarını okuyabilirsiniz."})
+  );
+  const yan = el("div", {class:"bilet-yan"},
+    el("span", {class:"sure", text:saat(k.sure)}),
+    el("small", {text:k.sayfa + " sayfa" + (k.dil ? " · " + k.dil : "")}),
+    el("a", {href:k.link, target:"_blank", rel:"noopener", text:"Katalogda gör"})
+  );
+  return el("article", {class:"bilet"}, ana, yan);
+}
+
+function goster(){
+  sonuc.replaceChildren();
+  if (!secili) { sonuc.append(el("div", {class:"bos", text:"Önerileri görmek için yukarıdan bir şehir seçin."})); return; }
+  const [ad, sure] = secili;
+  const {liste, hepsi} = oner(sure);
+  sonuc.append(el("div", {class:"ozet"},
+    el("strong", {text:ad + " yolculuğu: yaklaşık " + saat(sure)})));
+  sonuc.append(el("p", {class:"not", text: hepsi
+    ? "Trende tamamen bitirebileceğiniz kitaplar, yolculuğu en iyi dolduranlardan başlayarak:"
+    : "Bu yolculukta tamamen bitecek kadar kısa bir kitap yok. Şu kitaplara başlayabilirsiniz:"}));
+  liste.slice(0, gosterilen).forEach(k => sonuc.append(bilet(k, sure)));
+  if (liste.length > gosterilen) {
+    const d = el("button", {class:"daha", type:"button", text:"Daha fazla göster (" + (liste.length - gosterilen) + " kitap daha)"});
+    d.addEventListener("click", () => { gosterilen += ADIM; goster(); });
+    sonuc.append(d);
+  }
+}
+
+function sec(s){
+  secili = s; gosterilen = ADIM;
+  hat.querySelectorAll(".durak").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.ad === s[0])));
+  goster();
+}
+
+SEHIRLER.forEach(s => {
+  const b = el("button", {class:"durak", type:"button", "data-ad":s[0], "aria-pressed":"false"},
+    el("b", {text:s[0]}), el("span", {text:saat(s[1])}));
+  b.addEventListener("click", () => sec(s));
+  hat.append(b);
+});
+
+fetch("kitaplar.json")
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(v => { kitaplar = v; })
+  .catch(() => {
+    sonuc.replaceChildren(el("div", {class:"bos", text:"Kitap verisi yüklenemedi. Sayfayı yenileyin; sorun sürerse kitaplar.json dosyasının sitede olduğundan emin olun."}));
+    hat.querySelectorAll(".durak").forEach(b => b.disabled = true);
+  });
+</script>
+</body>
+</html>
