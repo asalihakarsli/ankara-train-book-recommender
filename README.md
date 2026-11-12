@@ -2,7 +2,9 @@
 
 *Picks books from the Ankara YHT Station Library catalog that fit the length of your train journey from Ankara. Python, web scraping, pandas.*
 
-Ankara Büyükşehir Belediyesi'nin YHT Gar Kütüphanesi kataloğundan kitap bilgilerini toplar (`scraper.py`) ve seçtiğiniz şehre olan tren yolculuğunuzun süresine göre okuyabileceğiniz kitapları önerir (`recommender.py`). #Ödünç aldığınız kitaplar sadece ABB bünyesindeki kütüphanelere geri iade edilebilir.
+Ankara Büyükşehir Belediyesi'nin YHT Gar Kütüphanesi kataloğundan kitap bilgilerini toplar (`scraper.py`) ve seçtiğiniz şehre olan tren yolculuğunuzun süresine göre okuyabileceğiniz kitapları önerir (`recommender.py`). 
+
+**Ödünç aldığınız kitaplar sadece ABB bünyesindeki kütüphanelere geri iade edilebilir.**
 
 ## Nasıl çalışır?
 
