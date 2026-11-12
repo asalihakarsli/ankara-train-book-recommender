@@ -142,10 +142,13 @@ function kart(k, yolculuk){
     el("h3", {text:k.ad}),
     el("p", {class:"yazar", text:yazarDuzelt(k.yazar)}),
     el("div", {class:"cubuk", role:"img", "aria-label": tam ? "Tamamı okunabilir" : "Yaklaşık %" + y + " okunabilir"}, el("i", {style:"width:" + y + "%"})),
-    el("p", {class:"durum", text: tam ? "Yolculukta bitirebilirsiniz." : "Yolculuk süresince yaklaşık %" + y + " kadarını okuyabilirsiniz."}),
+    el("p", {class:"durum", text: tam ? "Yolculukta bitirirsiniz." : "Yolculukta yaklaşık %" + y + " kadarını okuyabilirsiniz."}),
     el("div", {class:"alt"},
       el("span", {text:k.sayfa + " sayfa, yaklaşık " + saat(k.sure) + " okuma"}),
-      el("a", {href:k.link, target:"_blank", rel:"noopener", text:"Katalogda gör"})
+      el("div", {style:"display:flex; gap:16px; align-items:center;"},
+        el("a", {href:"https://katalog.ankara.bel.tr/cgi-bin/koha/opac-library.pl", target:"_blank", rel:"noopener", text:"İade Noktaları"}),
+        el("a", {href:k.link, target:"_blank", rel:"noopener", text:"Katalogda gör"})
+      )
     )
   );
 }
